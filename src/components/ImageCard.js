@@ -1,9 +1,11 @@
 import { Box, Image } from "@chakra-ui/react";
-import React, { useState } from "react";
-import ImageCardOverlay from "./ImageCardOverlay";
+import React from "react";
+import { useItems } from "../contexts/ItemsProvider";
+import CustomCheckbox from "./common/CustomCheckbox";
 
 const ImageCard = ({ index, img }) => {
-  const [checked, setChecked] = useState(false);
+  const { selectedItems, handleChecked } = useItems();
+  const isChecked = selectedItems.some((item) => item === img);
 
   const featureImgStyle = {
     gridRowStart: 1,
@@ -28,9 +30,27 @@ const ImageCard = ({ index, img }) => {
         },
       }}
     >
-      <Image src={img} alt="" borderRadius="xl" opacity={checked ? 0.5 : 1} />
+      <Image src={img} alt="" borderRadius="xl" opacity={isChecked ? 0.5 : 1} />
 
-      <ImageCardOverlay checked={checked} setChecked={setChecked} />
+      <Box
+        borderRadius="xl"
+        bg={isChecked ? null : "#0000008a"}
+        w="full"
+        h="full"
+        position="absolute"
+        left="0"
+        top="0"
+        visibility={isChecked ? "visible" : "hidden"}
+        opacity={isChecked ? 1 : 0}
+        className="overlay"
+        transition="0.3s ease"
+      >
+        <CustomCheckbox
+          m="6"
+          isChecked={isChecked}
+          onChange={(e) => handleChecked(e.target.checked, img)}
+        ></CustomCheckbox>
+      </Box>
     </Box>
   );
 };
