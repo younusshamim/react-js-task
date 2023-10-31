@@ -1,7 +1,10 @@
-import { Flex, Image } from "@chakra-ui/react";
-import React from "react";
+import { Box, Image } from "@chakra-ui/react";
+import React, { useState } from "react";
+import ImageCardOverlay from "./ImageCardOverlay";
 
 const ImageCard = ({ index, img }) => {
+  const [checked, setChecked] = useState(false);
+
   const featureImgStyle = {
     gridRowStart: 1,
     gridColumnStart: 1,
@@ -10,16 +13,25 @@ const ImageCard = ({ index, img }) => {
   };
 
   return (
-    <Flex
+    <Box
       style={index === 0 ? featureImgStyle : {}}
       borderWidth="2px"
       borderColor="borderColor"
       borderRadius="xl"
-      w="100%"
-      h="100%"
+      key={index}
+      cursor="pointer"
+      position="relative"
+      _hover={{
+        ".overlay": {
+          visibility: "visible",
+          opacity: 1,
+        },
+      }}
     >
-      <Image src={img} alt="" borderRadius="xl" />
-    </Flex>
+      <Image src={img} alt="" borderRadius="xl" opacity={checked ? 0.5 : 1} />
+
+      <ImageCardOverlay checked={checked} setChecked={setChecked} />
+    </Box>
   );
 };
 
