@@ -6,11 +6,11 @@ const ItemsProvider = ({ children }) => {
   const [itemsData, setItemsData] = useState(imgData);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const handleChecked = (isChecked, img) => {
+  const handleChecked = (isChecked, item) => {
     if (isChecked) {
-      setSelectedItems((prev) => [...prev, img]);
+      setSelectedItems((prev) => [...prev, item]);
     } else {
-      const filterd = selectedItems.filter((item) => item !== img);
+      const filterd = selectedItems.filter((el) => el.id !== item.id);
       setSelectedItems(filterd);
     }
   };
@@ -21,7 +21,14 @@ const ItemsProvider = ({ children }) => {
     setSelectedItems([]);
   };
 
-  const value = { itemsData, selectedItems, handleChecked, handleDelete };
+  const value = {
+    itemsData,
+    selectedItems,
+    handleChecked,
+    handleDelete,
+    setItemsData,
+    setSelectedItems,
+  };
 
   return <ItemContext.Provider value={value}>{children}</ItemContext.Provider>;
 };

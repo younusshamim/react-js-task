@@ -13,6 +13,7 @@ const AddImages = () => {
       justify="center"
       gap="15px"
       cursor="pointer"
+      py="40px"
     >
       <Box fontSize="20px">
         <FaRegImage />

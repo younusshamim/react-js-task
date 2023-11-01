@@ -1,11 +1,33 @@
 import { Box, Image } from "@chakra-ui/react";
 import React from "react";
 import { useItems } from "../contexts/ItemsProvider";
-import CustomCheckbox from "./common/CustomCheckbox";
+import ImageCardOverlay from "./ImageCardOverlay";
 
-const ImageCard = ({ index, img }) => {
-  const { selectedItems, handleChecked } = useItems();
-  const isChecked = selectedItems.some((item) => item === img);
+const ImageCard = ({ index, item }) => {
+  const { selectedItems, itemsData, setItemsData } = useItems();
+  const isChecked = selectedItems.some((el) => el.id === item.id);
+
+  const updateOrder = (draggedIndex, droppedIndex) => {
+    const newItems = [...itemsData];
+    const draggedItem = newItems[draggedIndex];
+    newItems.splice(draggedIndex, 1);
+    newItems.splice(droppedIndex, 0, draggedItem);
+    setItemsData(newItems);
+  };
+
+  const handleDragStart = (e) => {
+    e.dataTransfer.setData("index", index.toString());
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e) => {
+    const draggedIndex = e.dataTransfer.getData("index");
+    const droppedIndex = index;
+    updateOrder(draggedIndex, droppedIndex);
+  };
 
   const featureImgStyle = {
     gridRowStart: 1,
@@ -29,28 +51,19 @@ const ImageCard = ({ index, img }) => {
           opacity: 1,
         },
       }}
+      draggable
+      onDragStart={handleDragStart}
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
     >
-      <Image src={img} alt="" borderRadius="xl" opacity={isChecked ? 0.5 : 1} />
-
-      <Box
+      <Image
+        src={item.img}
+        alt=""
         borderRadius="xl"
-        bg={isChecked ? null : "#0000008a"}
-        w="full"
-        h="full"
-        position="absolute"
-        left="0"
-        top="0"
-        visibility={isChecked ? "visible" : "hidden"}
-        opacity={isChecked ? 1 : 0}
-        className="overlay"
-        transition="0.3s ease"
-      >
-        <CustomCheckbox
-          m="6"
-          isChecked={isChecked}
-          onChange={(e) => handleChecked(e.target.checked, img)}
-        ></CustomCheckbox>
-      </Box>
+        opacity={isChecked ? 0.5 : 1}
+      />
+
+      <ImageCardOverlay isChecked={isChecked} item={item} />
     </Box>
   );
 };
