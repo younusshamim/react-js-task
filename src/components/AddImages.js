@@ -27,7 +27,7 @@ const AddImages = () => {
       justify="center"
       gap="15px"
       cursor="pointer"
-      py="40px"
+      py="50px"
     >
       <Input
         display="none"

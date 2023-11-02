@@ -10,7 +10,7 @@ const Header = () => {
   return (
     <HStack
       justify="space-between"
-      p="10px 40px"
+      p={{ base: "10px 20px", md: "10px 40px" }}
       borderBottomWidth="2px"
       borderBottomColor="borderColor"
     >

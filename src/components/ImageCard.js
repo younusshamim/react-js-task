@@ -47,13 +47,13 @@ const ImageCard = ({ index, item }) => {
       ref={setNodeRef}
       {...attributes}
       {...listeners}
+      h="fit-content"
     >
       <Image
         src={item.img}
         alt=""
         borderRadius="xl"
         opacity={isChecked ? 0.5 : 1}
-        h="full"
         objectFit="contain"
       />
 

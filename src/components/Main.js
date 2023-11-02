@@ -53,10 +53,16 @@ const Main = () => {
   }
 
   return (
-    <Stack bg="#ecf2f6" p="20px" minH="100vh" align="center" justify="center">
+    <Stack
+      bg="#ecf2f6"
+      p={{ base: "0px", md: "20px" }}
+      minH="100vh"
+      align="center"
+      justify="center"
+    >
       <Stack
         bg="#fefeff"
-        borderRadius="xl"
+        borderRadius={{ base: "none", md: "xl" }}
         w={{ base: "100%", lg: "960px" }}
         boxShadow="md"
         pb="10px"
@@ -73,6 +79,7 @@ const Main = () => {
           <SortableContext items={itemsData} strategy={() => null}>
             <Grid
               p="30px 40px"
+              p={{ base: "30px 30px", md: "30px 40px" }}
               templateColumns={{
                 base: "repeat(2, 1fr)",
                 md: "repeat(3, 1fr)",
