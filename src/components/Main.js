@@ -4,15 +4,21 @@ import Header from "./Header";
 import ImageCard from "./ImageCard";
 import AddImages from "./AddImages";
 import { useItems } from "../contexts/ItemsProvider";
+import MyDragOverlay from "./MyDragOverlay";
 import {
   DndContext,
   closestCenter,
-  DragOverlay,
   useSensor,
   useSensors,
   PointerSensor,
+  MouseSensor,
+  TouchSensor,
 } from "@dnd-kit/core";
-import { arrayMove, SortableContext } from "@dnd-kit/sortable";
+import {
+  arrayMove,
+  rectSortingStrategy,
+  SortableContext,
+} from "@dnd-kit/sortable";
 
 const Main = () => {
   const { itemsData, setItemsData } = useItems();
@@ -83,7 +89,7 @@ const Main = () => {
             </Grid>
           </SortableContext>
 
-          <DragOverlay activeId={activeId} itemsData={itemsData} />
+          <MyDragOverlay activeId={activeId} itemsData={itemsData} />
         </DndContext>
       </Stack>
     </Stack>
