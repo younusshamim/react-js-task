@@ -9,8 +9,8 @@ const AddImages = () => {
   const handleFileChange = (e) => {
     const selectedImage = e.target.files;
 
-    const newItems = Array.from(selectedImage).map((file) => {
-      const id = itemsData.length + 1;
+    const newItems = Array.from(selectedImage).map((file, index) => {
+      const id = itemsData.length + 1 + index;
       const img = URL.createObjectURL(file);
       return { id, img };
     });

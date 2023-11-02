@@ -53,6 +53,8 @@ const ImageCard = ({ index, item }) => {
         alt=""
         borderRadius="xl"
         opacity={isChecked ? 0.5 : 1}
+        h="full"
+        objectFit="contain"
       />
 
       <ImageCardOverlay isChecked={isChecked} item={item} />

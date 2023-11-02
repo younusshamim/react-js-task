@@ -7,22 +7,24 @@ import { useItems } from "../contexts/ItemsProvider";
 import {
   DndContext,
   closestCenter,
-  MouseSensor,
-  TouchSensor,
   DragOverlay,
   useSensor,
   useSensors,
+  PointerSensor,
 } from "@dnd-kit/core";
-import {
-  arrayMove,
-  SortableContext,
-  rectSortingStrategy,
-} from "@dnd-kit/sortable";
+import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 
 const Main = () => {
   const { itemsData, setItemsData } = useItems();
-  const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
   const [activeId, setActiveId] = useState(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
+  );
 
   function handleDragEnd(event) {
     const { active, over } = event;
@@ -81,21 +83,7 @@ const Main = () => {
             </Grid>
           </SortableContext>
 
-          <DragOverlay adjustScale={true} zIndex="99">
-            {activeId ? (
-              <Box
-                borderWidth="2px"
-                borderColor="borderColor"
-                borderRadius="xl"
-              >
-                <Image
-                  src={itemsData.find((item) => item.id === activeId).img}
-                  alt=""
-                  borderRadius="xl"
-                />
-              </Box>
-            ) : null}
-          </DragOverlay>
+          <DragOverlay activeId={activeId} itemsData={itemsData} />
         </DndContext>
       </Stack>
     </Stack>
