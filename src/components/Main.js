@@ -27,7 +27,7 @@ const Main = () => {
   function handleDragEnd(event) {
     const { active, over } = event;
 
-    if (active.id !== over.id) {
+    if (active?.id !== over?.id) {
       setItemsData((items) => {
         const oldIndex = items.findIndex((item) => item.id === active.id);
         const newIndex = items.findIndex((item) => item.id === over.id);
@@ -72,8 +72,6 @@ const Main = () => {
               }}
               gap="5"
               position="relative"
-              w="100%"
-              overflow="hidden"
             >
               {itemsData.map((item, indx) => (
                 <ImageCard index={indx} item={item} key={indx} />
@@ -83,13 +81,19 @@ const Main = () => {
             </Grid>
           </SortableContext>
 
-          <DragOverlay adjustScale={true}>
+          <DragOverlay adjustScale={true} zIndex="99">
             {activeId ? (
-              <Image
-                src={itemsData.find((item) => item.id === activeId).img}
-                alt=""
+              <Box
+                borderWidth="2px"
+                borderColor="borderColor"
                 borderRadius="xl"
-              />
+              >
+                <Image
+                  src={itemsData.find((item) => item.id === activeId).img}
+                  alt=""
+                  borderRadius="xl"
+                />
+              </Box>
             ) : null}
           </DragOverlay>
         </DndContext>

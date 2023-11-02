@@ -27,15 +27,6 @@ const ImageCard = ({ index, item }) => {
     gridRowStart: index === 0 ? "span 2" : null,
     gridColumnStart: index === 0 ? "span 2" : null,
     ...style,
-    top: isDragging && "0px",
-    bottom: isDragging && "0px",
-    margin: isDragging && "0px",
-    padding: isDragging && "0px",
-    //opacity: faded ? "0.2" : "1",
-    // transformOrigin: "0 0",
-    // backgroundSize: "cover",
-    // backgroundPosition: "center",
-    // backgroundColor: "grey",
   };
 
   return (

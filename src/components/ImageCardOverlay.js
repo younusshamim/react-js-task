@@ -21,9 +21,10 @@ const ImageCardOverlay = ({ isChecked, item }) => {
       transition="0.5s ease"
     >
       <CustomCheckbox
+        zIndex="999999"
         m="6"
         isChecked={isChecked}
-        onChange={(e) => handleChecked(e.target.checked, item)}
+        onChange={(e) => handleChecked(e, e.target.checked, item)}
       ></CustomCheckbox>
     </Box>
   );

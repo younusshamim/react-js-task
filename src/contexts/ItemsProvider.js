@@ -6,7 +6,9 @@ const ItemsProvider = ({ children }) => {
   const [itemsData, setItemsData] = useState(imgData);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const handleChecked = (isChecked, item) => {
+  const handleChecked = (e, isChecked, item) => {
+    // e.stopPropagation();
+
     if (isChecked) {
       setSelectedItems((prev) => [...prev, item]);
     } else {
