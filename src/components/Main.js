@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Box, Grid, Image, Stack, Text } from "@chakra-ui/react";
+import { Grid, Stack } from "@chakra-ui/react";
 import Header from "./Header";
-import ImageCard from "./ImageCard";
+import SingleItem from "./SingleItem";
 import AddImages from "./AddImages";
 import { useItems } from "../contexts/ItemsProvider";
 import MyDragOverlay from "./MyDragOverlay";
@@ -11,8 +11,6 @@ import {
   useSensor,
   useSensors,
   PointerSensor,
-  MouseSensor,
-  TouchSensor,
 } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -34,7 +32,6 @@ const Main = () => {
 
   function handleDragEnd(event) {
     const { active, over } = event;
-
     if (active?.id !== over?.id) {
       setItemsData((items) => {
         const oldIndex = items.findIndex((item) => item.id === active.id);
@@ -43,11 +40,9 @@ const Main = () => {
       });
     }
   }
-
   function handleDragCancel() {
     setActiveId(null);
   }
-
   function handleDragStart(event) {
     setActiveId(event.active.id);
   }
@@ -76,9 +71,8 @@ const Main = () => {
           onDragEnd={handleDragEnd}
           onDragCancel={handleDragCancel}
         >
-          <SortableContext items={itemsData} strategy={() => null}>
+          <SortableContext items={itemsData} strategy={rectSortingStrategy}>
             <Grid
-              p="30px 40px"
               p={{ base: "30px 30px", md: "30px 40px" }}
               templateColumns={{
                 base: "repeat(2, 1fr)",
@@ -88,10 +82,9 @@ const Main = () => {
               gap="5"
               position="relative"
             >
-              {itemsData.map((item, indx) => (
-                <ImageCard index={indx} item={item} key={indx} />
-              ))}
-
+              {itemsData.map((item, indx) => {
+                return <SingleItem index={indx} item={item} key={indx} />;
+              })}
               <AddImages />
             </Grid>
           </SortableContext>

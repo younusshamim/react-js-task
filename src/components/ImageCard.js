@@ -1,29 +1,15 @@
-import { Box, Image } from "@chakra-ui/react";
-import React from "react";
+import React, { forwardRef } from "react";
 import { useItems } from "../contexts/ItemsProvider";
+import { Box, Image } from "@chakra-ui/react";
 import ImageCardOverlay from "./ImageCardOverlay";
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 
-const ImageCard = ({ index, item }) => {
+const ImageCard = forwardRef(({ item, index, faded, style, ...props }, ref) => {
   const { selectedItems } = useItems();
   const isChecked = selectedItems.some((el) => el.id === item.id);
 
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: item.id });
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
   const featureImgStyle = {
+    opacity: faded ? "0.2" : "1",
+    transformOrigin: "0 0",
     gridRowStart: index === 0 ? "span 2" : null,
     gridColumnStart: index === 0 ? "span 2" : null,
     ...style,
@@ -31,7 +17,9 @@ const ImageCard = ({ index, item }) => {
 
   return (
     <Box
-      style={index === 0 ? featureImgStyle : style}
+      {...props}
+      ref={ref}
+      style={featureImgStyle}
       borderWidth="2px"
       borderColor="borderColor"
       borderRadius="xl"
@@ -44,22 +32,19 @@ const ImageCard = ({ index, item }) => {
           opacity: 1,
         },
       }}
-      ref={setNodeRef}
-      {...attributes}
-      {...listeners}
-      h="fit-content"
     >
       <Image
         src={item.img}
         alt=""
         borderRadius="xl"
         opacity={isChecked ? 0.5 : 1}
-        objectFit="contain"
+        objectFit="cover"
+        h="full"
       />
 
       <ImageCardOverlay isChecked={isChecked} item={item} />
     </Box>
   );
-};
+});
 
 export default ImageCard;
