@@ -32,6 +32,7 @@ const ImageCard = forwardRef(({ item, index, faded, style, ...props }, ref) => {
           opacity: 1,
         },
       }}
+      h={index == 0 ? "350" : "165px"}
     >
       <Image
         src={item.img}
@@ -39,6 +40,7 @@ const ImageCard = forwardRef(({ item, index, faded, style, ...props }, ref) => {
         borderRadius="xl"
         opacity={isChecked ? 0.5 : 1}
         objectFit="cover"
+        w="full"
         h="full"
       />
 
